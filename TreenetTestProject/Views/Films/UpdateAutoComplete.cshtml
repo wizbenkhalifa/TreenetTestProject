@@ -1,0 +1,8 @@
+﻿@model IEnumerable<TreenetTestProject.Models.Film>
+<div id="page-content">
+    @foreach (var item in Model)
+    {
+        @Html.DisplayFor(modelItem => item.title)<br/>
+
+    }
+</div>

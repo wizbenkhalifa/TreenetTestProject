@@ -1,0 +1,20 @@
+﻿@model IEnumerable<TreenetTestProject.Models.Film>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<script>
+    redirect = function (e) {
+        var uri = "Films?searchText=" + document.getElementById("searchInput").value;
+        window.location.replace(uri);
+    }
+</script>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <div class="autocomplete">
+        <input id="searchInput" type="text" name="searchText" placeholder="Type Film Name" value="">
+    </div>
+    <input type="submit" onclick="redirect()">
+
+</div>
