@@ -1,11 +1,4 @@
-﻿using ServiceStack.DataAnnotations;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TreenetTestProject.Models
+﻿namespace TreenetTestProject.Models
 {
     public class Film
     {

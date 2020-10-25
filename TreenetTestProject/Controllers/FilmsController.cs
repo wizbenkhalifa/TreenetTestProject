@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using TreenetTestProject.Data;
 using TreenetTestProject.Models;
 
@@ -21,23 +20,23 @@ namespace TreenetTestProject.Controllers
         }
 
         // GET: Films
-        public async Task<IActionResult> Index(string? searchText)
+        public async Task<IActionResult> Index(string searchText)
         {
-            if (searchText is null) {
-                return View(await _context.Film.ToListAsync());
-            }
-            var film = from f in _context.Film
-                         select f;
-
             if (!String.IsNullOrEmpty(searchText))
             {
+                var film = from f in _context.Film
+                           select f;
+                searchText = searchText.Split(".", 2).Last();
                 film = film.Where(s => s.title.Contains(searchText));
                 _context.Add(new Search(searchText));
                 await _context.SaveChangesAsync();
+                return View(await film.ToListAsync());
+            }
+            else
+            {
+                return View(await _context.Film.ToListAsync());
             }
 
-            return View(await film.ToListAsync());
-            
         }
 
         // GET: Films/Details/5
@@ -160,35 +159,41 @@ namespace TreenetTestProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Email(string emailSender, string emailRecepient, string subject) {
+        public async Task<IActionResult> Email(string emailSender, string emailRecepient, string subject, string password)
+        {
 
-            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 25);
-            smtpClient.UseDefaultCredentials = true; // uncomment if you don't want to use the network credentials
-            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtpClient.EnableSsl = true;
-            MailMessage mail = new MailMessage();
-            Search search =  _context.Search.ToList().Last();
+            //Setting up SMTP Connection
+            using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 465)) {
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtpClient.EnableSsl = true;
+                MailMessage mail = new MailMessage();
 
-            var film = from f in _context.Film
-                       select f;
-
-            if (!String.IsNullOrEmpty(search.searchText))
-            {
-                film = film.Where(s => s.title.Contains(search.searchText));
-                mail.Body = film.ToString();
+                //Fetching Data from Db 
+                Search search = _context.Search.ToList().Last();
+                var film = from f in _context.Film
+                           select f;
+                if (!String.IsNullOrEmpty(search.searchText))
+                {
+                    film = film.Where(s => s.title.Contains(search.searchText));
+                    //Adding Data to Mail body
+                    mail.Body = film.ToString();
+                }
+                //Mail Addressing
+                mail.From = new MailAddress(emailSender);
+                mail.To.Add(new MailAddress(emailRecepient));
+                //Mail Authentication
+                smtpClient.Credentials = new NetworkCredential(emailSender, password);
+                smtpClient.Send(mail);
             }
-
-            mail.From = new MailAddress(emailSender);
-            mail.To.Add(new MailAddress(emailRecepient));
-
-            smtpClient.Send(mail);
+                
             return View();
         }
 
-        public async Task<IActionResult> UpdateAutoComplete() {
+        public async Task<IActionResult> UpdateAutoComplete()
+        {
             return View(await _context.Film.ToListAsync());
         }
-        
+
         private bool FilmExists(int id)
         {
             return _context.Film.Any(e => e.filmID == id);

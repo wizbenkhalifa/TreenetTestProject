@@ -47,11 +47,13 @@
     </tbody>
 
 </table>
-
-<form asp-action="Email">
-    <label>Email Search Result</label>
-    <input type="email" name="emailSender" placeholder="Email of Sender" />
-    <input type="email" name="emailRecepient" placeholder="Email of recepient" />
-    <input type="text" name="subject" placeholder="Email Subject">
-    <input type="submit" value="Send" />
-</form>
+<div class="form-group">
+    <form asp-action="Email">
+        <label>Mail Search Result</label>
+        <input type="email" name="emailSender" placeholder="Email of Sender" />
+        <input type="email" name="emailRecepient" placeholder="Email of recepient" />
+        <input type="text" name="subject" placeholder="Email Subject">
+        <input type="password" name="password" placeholder="Password">
+        <input type="submit" value="Send" />
+    </form>
+</div>

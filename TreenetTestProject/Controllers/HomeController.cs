@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using TreenetTestProject.Data;
 using TreenetTestProject.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using TreenetTestProject.Controllers;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using SQLitePCL;
 
 namespace TreenetTestProject.Controllers
 {

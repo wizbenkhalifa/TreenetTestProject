@@ -1,9 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TreenetTestProject.Models
 {
@@ -29,7 +26,8 @@ namespace TreenetTestProject.Models
         public override string ToString()
         {
             string temp = "";
-            foreach (Film item in models) {
+            foreach (Film item in models)
+            {
                 temp += item.ToString();
             }
             return (temp);

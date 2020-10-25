@@ -1,5 +1,3 @@
-using System;
-
 namespace TreenetTestProject.Models
 {
     public class ErrorViewModel
