@@ -15,8 +15,4 @@
     <PackageReference Include="ServiceStack.Interfaces" Version="5.9.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Email\" />
-  </ItemGroup>
-
 </Project>

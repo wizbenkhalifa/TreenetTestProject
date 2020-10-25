@@ -14,5 +14,19 @@ namespace TreenetTestProject.Models
         public string producer { get; set; }
         public int duration { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"{filmID}.{title}|";
+        }
     }
 }

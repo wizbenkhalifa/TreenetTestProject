@@ -19,15 +19,18 @@ namespace TreenetTestProject.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly FilmContexts _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, FilmContexts context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index(string searchext)
+        public async Task<IActionResult> Index()
         {
-            return View();
+            HomeDataModel hdm = new HomeDataModel(_context.Film.ToList());
+            return View(hdm);
         }
 
         public IActionResult Privacy()

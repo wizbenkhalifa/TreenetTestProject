@@ -1,20 +1,25 @@
-﻿@model IEnumerable<TreenetTestProject.Models.Film>
+﻿@model IEnumerable<TreenetTestProject.Models.HomeDataModel>
+
 @{
     ViewData["Title"] = "Home Page";
 }
-
+<script src="~/js/site.js"></script>
 <script>
-    redirect = function (e) {
-        var uri = "Films?searchText=" + document.getElementById("searchInput").value;
-        window.location.replace(uri);
-    }
+    $(document).ready(function () {
+        var suggestions = "@Model.ToString()".split("|");
+        console.log(suggestions);
+        autocomplete(document.getElementById("searchInput"), suggestions);
+        console.log(document.getElementById("searchInput").value)
+    })
 </script>
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <div class="autocomplete">
-        <input id="searchInput" type="text" name="searchText" placeholder="Type Film Name" value="">
-    </div>
+    <form autocomplete="off">
+        <div class="autocomplete">
+            <input id="searchInput" type="text" name="searchText">
+        </div>
+    </form>
     <input type="submit" onclick="redirect()">
 
 </div>

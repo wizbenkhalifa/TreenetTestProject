@@ -1,5 +1,4 @@
-﻿
-function autocomplete(inp, arr) {
+﻿function autocomplete(inp, arr) {
     
     var currentFocus;
     
@@ -15,15 +14,22 @@ function autocomplete(inp, arr) {
         a.setAttribute("class", "autocomplete-items");
         
         this.parentNode.appendChild(a);
-       
+        
         for (i = 0; i < arr.length; i++) {
-           
-            if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+
+            if (arr[i].toUpperCase().includes(val.toUpperCase())) {
                 
                 b = document.createElement("DIV");
-               
-                b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                b.innerHTML += arr[i].substr(val.length);
+                b.innerHTML = arr[i][0];
+                for (j = 1, l = 0; j < arr[i].length ; j++) {
+                    if (arr[i][j] == val[l]) {
+                        b.innerHTML += "<strong>" + arr[i][j] + "</strong>";
+                        l++;
+                    }
+                    else {
+                        b.innerHTML += arr[i][j];
+                    }
+                }
               
                 b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
                 
@@ -92,5 +98,7 @@ function autocomplete(inp, arr) {
     });
 }
 
-var suggestions = ["test"];
-autocomplete(document.getElementById("searchInput"), suggestions);
+function redirect(e) {
+    var uri = "Films?searchText=" + document.getElementById("searchInput").value;
+    window.location.replace(uri);
+}
